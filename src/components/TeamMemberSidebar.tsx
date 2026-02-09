@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import type { TeamMember, Task } from "../types";
-import { getInitials, dateHelpers } from "../utils";
+import { getInitials } from "../utils";
 
 interface TeamMemberSidebarProps {
   members: TeamMember[];
