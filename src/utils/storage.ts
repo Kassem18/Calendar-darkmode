@@ -45,7 +45,7 @@ export const storage = {
       const data = localStorage.getItem(DARK_MODE_KEY);
       return data ? JSON.parse(data) : true;
     } catch {
-      return false;
+      return true;
     }
   },
 
