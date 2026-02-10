@@ -43,7 +43,7 @@ export const storage = {
   getDarkMode: (): boolean => {
     try {
       const data = localStorage.getItem(DARK_MODE_KEY);
-      return data ? JSON.parse(data) : false;
+      return data ? JSON.parse(data) : true;
     } catch {
       return false;
     }

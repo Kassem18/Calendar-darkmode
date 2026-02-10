@@ -23,7 +23,7 @@ export const DayCalendar: React.FC<DayCalendarProps> = ({
   onEditTask,
   onDeleteTask,
   onAddTask,
-  darkMode = false,
+  darkMode = true, // <- change from false to true
 }) => {
   const hours = Array.from({ length: 24 }, (_, i) => i);
 
