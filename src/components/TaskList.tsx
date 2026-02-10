@@ -6,8 +6,9 @@ interface TaskListProps {
   tasks: Task[];
   teamMembers: TeamMember[];
   onEditTask: (task: Task) => void;
-  onAddTask?: () => void;
-  darkMode?: boolean;
+  onDeleteTask: (taskId: string) => void;
+  onAddTask: () => void;
+  darkMode: boolean;
 }
 
 export const TaskList: React.FC<TaskListProps> = ({
