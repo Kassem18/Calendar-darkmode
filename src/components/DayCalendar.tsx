@@ -37,9 +37,9 @@ export const DayCalendar: React.FC<DayCalendarProps> = ({
     );
   };
 
-  const getTeamMember = (id: string | null) => {
-    if (!id) return null;
-    return teamMembers.find((m) => m.id === id) || null;
+  const getTeamMembers = (ids: string[]) => {
+    if (!ids || !ids.length) return [];
+    return teamMembers.filter((m) => ids.includes(m.id));
   };
 
   return (
@@ -147,8 +147,10 @@ export const DayCalendar: React.FC<DayCalendarProps> = ({
                 {/* Events */}
                 <div style={{ flex: 1, padding: "16px" }}>
                   {hourTasks.map((task) => {
-                    const member = getTeamMember(task.assignedMemberId);
-
+                    const assignedIds =
+                      (task as any).assignedMemberIds ||
+                      (task.assignedMemberId ? [task.assignedMemberId] : []);
+                    const members = getTeamMembers(assignedIds);
                     return (
                       <div
                         key={task.id}
@@ -208,48 +210,52 @@ export const DayCalendar: React.FC<DayCalendarProps> = ({
                                 {task.description}
                               </p>
                             )}
-                            {member && (
+                            {members.length > 0 && (
                               <div
                                 style={{
                                   display: "flex",
                                   alignItems: "center",
-                                  gap: "8px",
                                   marginTop: "8px",
                                 }}
                               >
-                                {member.avatar ? (
-                                  <img
-                                    src={member.avatar}
-                                    alt={member.name}
-                                    style={{
-                                      width: "20px",
-                                      height: "20px",
-                                      borderRadius: "50%",
-                                    }}
-                                  />
-                                ) : (
-                                  <div
-                                    style={{
-                                      width: "20px",
-                                      height: "20px",
-                                      borderRadius: "50%",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      fontSize: "10px",
-                                      fontWeight: "bold",
-                                      color: "white",
-                                      backgroundColor: member.color,
-                                    }}
-                                  >
-                                    {getInitials(member.name)}
-                                  </div>
+                                {members.map((member, index) =>
+                                  member.avatar ? (
+                                    <img
+                                      key={member.id}
+                                      src={member.avatar}
+                                      alt={member.name}
+                                      title={member.name}
+                                      style={{
+                                        width: "24px",
+                                        height: "24px",
+                                        borderRadius: "50%",
+                                        marginLeft: index > 0 ? "-8px" : 0,
+                                        border: "2px solid #1a1f3a",
+                                      }}
+                                    />
+                                  ) : (
+                                    <div
+                                      key={member.id}
+                                      title={member.name}
+                                      style={{
+                                        width: "24px",
+                                        height: "24px",
+                                        borderRadius: "50%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        fontSize: "10px",
+                                        fontWeight: "bold",
+                                        color: "white",
+                                        backgroundColor: member.color,
+                                        marginLeft: index > 0 ? "-8px" : 0,
+                                        border: "2px solid #1a1f3a",
+                                      }}
+                                    >
+                                      {getInitials(member.name)}
+                                    </div>
+                                  ),
                                 )}
-                                <span
-                                  style={{ fontSize: "12px", color: "#f0f0f0" }}
-                                >
-                                  {member.name}
-                                </span>
                               </div>
                             )}
                           </div>

@@ -25,7 +25,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
     description: "",
     startTime: new Date(),
     endTime: new Date(),
-    assignedMemberId: null as string | null,
+    assignedMemberIds: [] as string[],
     color: "#0d6efd",
     completed: false,
   });
@@ -37,7 +37,9 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         description: task.description,
         startTime: new Date(task.startTime),
         endTime: new Date(task.endTime),
-        assignedMemberId: task.assignedMemberId,
+        assignedMemberIds:
+          (task as any).assignedMemberIds ||
+          (task.assignedMemberId ? [task.assignedMemberId] : []),
         color: task.color,
         completed: task.completed,
       });
@@ -51,7 +53,7 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         description: "",
         startTime: start,
         endTime: end,
-        assignedMemberId: null,
+        assignedMemberIds: [],
         color: "#0d6efd",
         completed: false,
       });
@@ -153,16 +155,21 @@ export const TaskModal: React.FC<TaskModalProps> = ({
               <div className="mb-3">
                 <label className="form-label">Assign To</label>
                 <select
-                  value={formData.assignedMemberId || ""}
-                  onChange={(e) =>
+                  multiple
+                  value={formData.assignedMemberIds}
+                  onChange={(e) => {
+                    const selectedIds = Array.from(
+                      e.target.selectedOptions,
+                      (option) => option.value,
+                    );
                     setFormData({
                       ...formData,
-                      assignedMemberId: e.target.value || null,
-                    })
-                  }
+                      assignedMemberIds: selectedIds,
+                    });
+                  }}
                   className="form-select"
+                  style={{ height: "150px" }}
                 >
-                  <option value="">Unassigned</option>
                   {teamMembers.map((member) => (
                     <option key={member.id} value={member.id}>
                       {member.name}

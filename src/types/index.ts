@@ -12,7 +12,7 @@ export interface Task {
   description: string;
   startTime: Date;
   endTime: Date;
-  assignedMemberId: string | null;
+  assignedMemberIds: string[];
   color: string;
   completed: boolean;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import type { Task, TeamMember } from "../types";
-import { dateHelpers } from "../utils";
+import { dateHelpers, getInitials } from "../utils";
 
 interface MonthCalendarProps {
   date: Date;
@@ -50,9 +50,9 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
     );
   };
 
-  const getTeamMember = (id: string | null) => {
-    if (!id) return null;
-    return teamMembers.find((m) => m.id === id) || null;
+  const getTeamMembers = (ids: string[]) => {
+    if (!ids || !ids.length) return [];
+    return teamMembers.filter((m) => ids.includes(m.id));
   };
 
   return (
@@ -204,7 +204,10 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
                   </div>
                   <div style={{ maxHeight: "64px", overflow: "hidden" }}>
                     {dayTasks.slice(0, 2).map((task) => {
-                      const member = getTeamMember(task.assignedMemberId);
+                      const assignedIds =
+                        (task as any).assignedMemberIds ||
+                        (task.assignedMemberId ? [task.assignedMemberId] : []);
+                      const members = getTeamMembers(assignedIds);
                       return (
                         <div
                           key={task.id}
@@ -231,18 +234,46 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
                           >
                             {task.title}
                           </span>
-                          {member?.avatar && (
-                            <img
-                              src={member.avatar}
-                              alt={member.name}
-                              style={{
-                                width: "16px",
-                                height: "16px",
-                                borderRadius: "50%",
-                                flexShrink: 0,
-                              }}
-                            />
-                          )}
+                          <div style={{ display: "flex", flexShrink: 0 }}>
+                            {members.map((member, index) =>
+                              member.avatar ? (
+                                <img
+                                  key={member.id}
+                                  src={member.avatar}
+                                  alt={member.name}
+                                  title={member.name}
+                                  style={{
+                                    width: "16px",
+                                    height: "16px",
+                                    borderRadius: "50%",
+                                    marginLeft: index > 0 ? "-6px" : 0,
+                                    border: "1px solid #1a1f3a",
+                                  }}
+                                />
+                              ) : (
+                                <div
+                                  key={member.id}
+                                  title={member.name}
+                                  style={{
+                                    width: "16px",
+                                    height: "16px",
+                                    borderRadius: "50%",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    fontSize: "8px",
+                                    fontWeight: "bold",
+                                    color: "white",
+                                    backgroundColor: member.color,
+                                    marginLeft: index > 0 ? "-6px" : 0,
+                                    border: "1px solid #1a1f3a",
+                                  }}
+                                >
+                                  {getInitials(member.name)}
+                                </div>
+                              ),
+                            )}
+                          </div>
                         </div>
                       );
                     })}
