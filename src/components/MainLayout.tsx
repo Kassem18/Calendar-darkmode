@@ -152,7 +152,13 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
 
           {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="d-md-none bg-light border-bottom p-3">
+            <div
+              className="d-md-none border-bottom p-3"
+              style={{
+                backgroundColor: darkMode ? "#1a1f3a" : "#f8f9fa",
+                borderBottom: `1px solid ${darkMode ? "#2d3748" : "#dee2e6"}`,
+              }}
+            >
               <TeamMemberSidebar
                 members={teamMembers}
                 tasks={tasks}
@@ -167,6 +173,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                   setMobileMenuOpen(false);
                 }}
                 onDeleteMember={onDeleteTeamMember}
+                darkMode={darkMode}
               />
               <div className="btn-group d-flex gap-2 mt-3" role="group">
                 {(["month", "week", "day"] as const).map((v) => (
