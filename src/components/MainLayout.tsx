@@ -20,7 +20,6 @@ interface MainLayoutProps {
   onDeleteTask: (id: string) => void;
   onSelectDate: (date: Date) => void;
   onChangeView: (view: "month" | "week" | "day") => void;
-  onToggleDarkMode: () => void;
   onAddTeamMember: (member: Omit<TeamMember, "id">) => void;
   onUpdateTeamMember: (id: string, updates: Partial<TeamMember>) => void;
   onDeleteTeamMember: (id: string) => void;
@@ -37,7 +36,6 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   onDeleteTask,
   onSelectDate,
   onChangeView,
-  onToggleDarkMode,
   onAddTeamMember,
   onUpdateTeamMember,
   onDeleteTeamMember,
@@ -148,16 +146,6 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                     </button>
                   ))}
                 </div>
-
-                {/* Dark mode toggle */}
-                <button
-                  onClick={onToggleDarkMode}
-                  className="btn btn-sm btn-outline-secondary"
-                >
-                  <span style={{ fontSize: "18px" }}>
-                    {darkMode ? "☀️" : "🌙"}
-                  </span>
-                </button>
               </div>
             </div>
           </nav>

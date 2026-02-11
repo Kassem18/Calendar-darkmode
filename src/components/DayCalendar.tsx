@@ -12,7 +12,6 @@ interface DayCalendarProps {
   onDeleteTask: (id: string) => void;
   onAddTask: () => void;
   darkMode?: boolean;
-  onToggleTheme?: () => void;
 }
 
 export const DayCalendar: React.FC<DayCalendarProps> = ({
@@ -25,7 +24,6 @@ export const DayCalendar: React.FC<DayCalendarProps> = ({
   onDeleteTask,
   onAddTask,
   darkMode = true,
-  onToggleTheme,
 }) => {
   const hours = Array.from({ length: 24 }, (_, i) => i);
 
@@ -87,14 +85,6 @@ export const DayCalendar: React.FC<DayCalendarProps> = ({
           </p>
         </div>
         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-          {onToggleTheme && (
-            <button
-              onClick={onToggleTheme}
-              className="btn btn-outline-secondary btn-sm"
-            >
-              {darkMode ? "☀️" : "🌙"}
-            </button>
-          )}
           <button
             onClick={onPrevDay}
             className="btn btn-outline-secondary btn-sm"

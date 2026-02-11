@@ -8,11 +8,9 @@ function App() {
     teamMembers,
     selectedDate,
     view,
-    darkMode,
     loading,
     setSelectedDate,
     setView,
-    setDarkMode,
     addTask,
     updateTask,
     deleteTask,
@@ -24,8 +22,8 @@ function App() {
   // Update HTML element data-bs-theme attribute for Bootstrap dark mode
   useEffect(() => {
     const htmlElement = document.documentElement;
-    htmlElement.setAttribute("data-bs-theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
+    htmlElement.setAttribute("data-bs-theme", "dark");
+  }, []);
 
   if (loading) {
     return (
@@ -35,7 +33,7 @@ function App() {
           alignItems: "center",
           justifyContent: "center",
           height: "100vh",
-          backgroundColor: darkMode ? "#1a1a1a" : "#f5f5f5",
+          backgroundColor: "#1a1a1a",
         }}
       >
         <div style={{ textAlign: "center" }}>
@@ -49,9 +47,7 @@ function App() {
               margin: "0 auto 16px",
             }}
           ></div>
-          <p style={{ color: darkMode ? "#ccc" : "#666" }}>
-            Loading calendar...
-          </p>
+          <p style={{ color: "#ccc" }}>Loading calendar...</p>
         </div>
       </div>
     );
@@ -63,13 +59,12 @@ function App() {
       teamMembers={teamMembers}
       selectedDate={selectedDate}
       view={view}
-      darkMode={darkMode}
+      darkMode={true}
       onAddTask={addTask}
       onUpdateTask={updateTask}
       onDeleteTask={deleteTask}
       onSelectDate={setSelectedDate}
       onChangeView={setView}
-      onToggleDarkMode={() => setDarkMode(!darkMode)}
       onAddTeamMember={addTeamMember}
       onUpdateTeamMember={updateTeamMember}
       onDeleteTeamMember={deleteTeamMember}
