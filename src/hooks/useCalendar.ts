@@ -97,12 +97,18 @@ export const useCalendar = () => {
   const deleteTeamMember = useCallback((id: string) => {
     setTeamMembers((prev) => prev.filter((member) => member.id !== id));
     // Remove assignment from tasks
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.assignedMemberId === id
-          ? { ...task, assignedMemberId: null }
-          : task,
-      ),
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.assignedMemberIds.includes(id)) {
+          return {
+            ...task,
+            assignedMemberIds: task.assignedMemberIds.filter(
+              (memberId) => memberId !== id,
+            ),
+          };
+        }
+        return task;
+      }),
     );
   }, []);
 

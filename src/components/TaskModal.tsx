@@ -38,8 +38,10 @@ export const TaskModal: React.FC<TaskModalProps> = ({
         startTime: new Date(task.startTime),
         endTime: new Date(task.endTime),
         assignedMemberIds:
-          (task as any).assignedMemberIds ||
-          (task.assignedMemberId ? [task.assignedMemberId] : []),
+          task.assignedMemberIds ||
+          ((task as any).assignedMemberId
+            ? [(task as any).assignedMemberId]
+            : []),
         color: task.color,
         completed: task.completed,
       });
@@ -170,12 +172,26 @@ export const TaskModal: React.FC<TaskModalProps> = ({
                   className="form-select"
                   style={{ height: "150px" }}
                 >
-                  {teamMembers.map((member) => (
-                    <option key={member.id} value={member.id}>
-                      {member.name}
-                    </option>
-                  ))}
+                  {teamMembers.map((member) => {
+                    const isSelected = formData.assignedMemberIds.includes(
+                      member.id,
+                    );
+                    const limitReached =
+                      formData.assignedMemberIds.length >= 20;
+                    return (
+                      <option
+                        key={member.id}
+                        value={member.id}
+                        disabled={!isSelected && limitReached}
+                      >
+                        {member.name}
+                      </option>
+                    );
+                  })}
                 </select>
+                <div className="form-text">
+                  {formData.assignedMemberIds.length}/20 members selected.
+                </div>
               </div>
 
               <div className="mb-3">

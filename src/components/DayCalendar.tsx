@@ -148,8 +148,10 @@ export const DayCalendar: React.FC<DayCalendarProps> = ({
                 <div style={{ flex: 1, padding: "16px" }}>
                   {hourTasks.map((task) => {
                     const assignedIds =
-                      (task as any).assignedMemberIds ||
-                      (task.assignedMemberId ? [task.assignedMemberId] : []);
+                      task.assignedMemberIds ||
+                      ((task as any).assignedMemberId
+                        ? [(task as any).assignedMemberId]
+                        : []);
                     const members = getTeamMembers(assignedIds);
                     return (
                       <div

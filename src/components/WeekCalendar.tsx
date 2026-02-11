@@ -197,8 +197,10 @@ export const WeekCalendar: React.FC<WeekCalendarProps> = ({
                 >
                   {getTasksForDateAndHour(day, hour).map((task) => {
                     const assignedIds =
-                      (task as any).assignedMemberIds ||
-                      (task.assignedMemberId ? [task.assignedMemberId] : []);
+                      task.assignedMemberIds ||
+                      ((task as any).assignedMemberId
+                        ? [(task as any).assignedMemberId]
+                        : []);
                     const members = getTeamMembers(assignedIds);
                     return (
                       <div

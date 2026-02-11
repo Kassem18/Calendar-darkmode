@@ -26,8 +26,10 @@ export const TeamMemberSidebar: React.FC<TeamMemberSidebarProps> = ({
   const getMemberTaskCount = (memberId: string) => {
     return tasks.filter((task) => {
       const assignedIds =
-        (task as any).assignedMemberIds ||
-        (task.assignedMemberId ? [task.assignedMemberId] : []);
+        task.assignedMemberIds ||
+        ((task as any).assignedMemberId
+          ? [(task as any).assignedMemberId]
+          : []);
       return !task.completed && assignedIds.includes(memberId);
     }).length;
   };

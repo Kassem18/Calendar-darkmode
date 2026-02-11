@@ -69,8 +69,10 @@ export const TaskList: React.FC<TaskListProps> = ({
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {sortedTasks.map((task) => {
               const assignedIds =
-                (task as any).assignedMemberIds ||
-                (task.assignedMemberId ? [task.assignedMemberId] : []);
+                task.assignedMemberIds ||
+                ((task as any).assignedMemberId
+                  ? [(task as any).assignedMemberId]
+                  : []);
               const members = getTeamMembers(assignedIds);
               return (
                 <div

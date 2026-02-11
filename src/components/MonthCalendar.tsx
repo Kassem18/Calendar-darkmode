@@ -205,8 +205,10 @@ export const MonthCalendar: React.FC<MonthCalendarProps> = ({
                   <div style={{ maxHeight: "64px", overflow: "hidden" }}>
                     {dayTasks.slice(0, 2).map((task) => {
                       const assignedIds =
-                        (task as any).assignedMemberIds ||
-                        (task.assignedMemberId ? [task.assignedMemberId] : []);
+                        task.assignedMemberIds ||
+                        ((task as any).assignedMemberId
+                          ? [(task as any).assignedMemberId]
+                          : []);
                       const members = getTeamMembers(assignedIds);
                       return (
                         <div
