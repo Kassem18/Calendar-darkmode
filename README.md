@@ -1,6 +1,6 @@
 # Modern Company Calendar Web App
 
-A lightweight Outlook-inspired calendar application built with React, TypeScript, and Tailwind CSS.
+A Outlook-inspired calendar application built with React, TypeScript, and Tailwind CSS.
 
 ## ✨ Features
 
@@ -26,7 +26,6 @@ A lightweight Outlook-inspired calendar application built with React, TypeScript
 ### 🎨 User Experience
 - Clean, modern SaaS-style dashboard layout
 - Responsive design (Desktop, Tablet, Mobile)
-- Dark/Light mode toggle
 - Smooth transitions and animations
 - Card-based event display with member avatars
 
